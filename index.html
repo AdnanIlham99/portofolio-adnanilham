@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adnan Ilham Ads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Konsep tata letak: halaman seperti laporan iklan. Hero + deretan angka, empat berkas kasus bergaya buku besar dengan tangkapan layar dashboard asli, lalu cara kerja, brand, riwayat, sertifikat, kontak. */
+:root{
+  --bg:#EBEEEA;
+  --surface:#F8F9F7;
+  --ink:#111713;
+  --muted:#52605A;
+  --line:#C6CEC8;
+  --accent:#0E6B45;
+  --accent-ink:#FFFFFF;
+  --mark:#E8920C;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1310;--surface:#151D18;--ink:#E9EFEA;--muted:#93A399;--line:#27332B;
+    --accent:#4CCB8C;--accent-ink:#06130C;--mark:#F5A524;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1310;--surface:#151D18;--ink:#E9EFEA;--muted:#93A399;--line:#27332B;
+  --accent:#4CCB8C;--accent-ink:#06130C;--mark:#F5A524;color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0}
+html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.62 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;font-family:var(--f-display);font-stretch:114%;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1160px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font:500 .75rem/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+
+/* tombol */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.82rem 1.25rem;border-radius:8px;font:600 .95rem/1.2 var(--f-body);text-decoration:none;border:1.5px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.small{padding:.55rem .9rem;font-size:.88rem}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.logo{font:800 1.05rem/1 var(--f-display);font-stretch:116%;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.logo small{font:500 .7rem var(--f-mono);letter-spacing:.14em;color:var(--accent);margin-left:8px}
+.top nav{display:flex;gap:26px;font-size:.92rem}
+.top nav a{text-decoration:none;color:var(--muted)}
+.top nav a:hover{color:var(--ink)}
+@media (max-width:820px){.top nav{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,80px) 0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(28px,5vw,72px);align-items:end}
+.hero h1{font-size:clamp(2.5rem,6.2vw,4.9rem);line-height:.98;margin:18px 0 26px}
+.ringed{position:relative;display:inline-block;white-space:nowrap}
+.ringed svg{position:absolute;left:-7%;top:-14%;width:114%;height:128%;overflow:visible;pointer-events:none}
+.ringed path{fill:none;stroke:var(--mark);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lead{max-width:56ch;font-size:clamp(1.02rem,1.5vw,1.15rem);color:var(--muted)}
+.lead strong{color:var(--ink);font-weight:600}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.contact-mini{margin-top:18px;font:400 .82rem/1.6 var(--f-mono);color:var(--muted);overflow-wrap:anywhere}
+.portrait{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:14px;overflow:hidden;background:#E3E6E3}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.portrait figcaption{position:absolute;left:12px;bottom:12px;right:12px;background:var(--surface);color:var(--ink);border-radius:8px;padding:10px 12px;font:500 .74rem/1.45 var(--f-mono);letter-spacing:.02em}
+.portrait figcaption b{display:block;font-weight:500;color:var(--muted)}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .portrait{max-width:380px}
+}
+
+.figs{margin-top:clamp(36px,5vw,64px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink);margin-bottom:0}
+.fig{padding:18px 18px 22px 0;border-right:1px solid var(--line)}
+.fig+.fig{padding-left:18px}
+.fig:last-child{border-right:0}
+.fig b{display:block;font:800 clamp(1.4rem,2.6vw,2.15rem)/1.05 var(--f-display);font-stretch:112%;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:760px){.fig b{white-space:normal}}
+.fig span{display:block;margin-top:8px;color:var(--muted);font-size:.88rem;line-height:1.45;max-width:27ch}
+@media (max-width:760px){
+  .figs{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+  .fig,.fig+.fig{padding:16px 0 18px;border-right:0;border-top:1px solid var(--line)}
+  .fig:nth-child(-n+2){border-top:0}
+}
+
+/* seksi umum */
+.sec{padding-block:clamp(60px,9vw,116px) 0}
+.sec-head{max-width:760px;margin-bottom:clamp(28px,4vw,48px)}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.04;margin:12px 0 14px}
+.sec-head p{color:var(--muted);max-width:60ch}
+
+/* berkas kasus */
+.case{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(22px,4vw,60px);padding-block:30px clamp(40px,6vw,64px);border-top:2px solid var(--ink)}
+.case-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.case-meta img{width:28px;height:28px}
+.case-meta b{font:600 .95rem var(--f-body)}
+.case-meta time{margin-left:auto;font:400 .76rem var(--f-mono);color:var(--muted)}
+.case h3{font-size:clamp(1.35rem,2.4vw,1.8rem);line-height:1.12;margin:16px 0 10px}
+.case .goal{color:var(--muted);max-width:52ch}
+.ledger{margin:22px 0 0;padding:0}
+.ledger div{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px dotted var(--muted)}
+.ledger dt{color:var(--muted);font-size:.92rem}
+.ledger dd{margin:0 0 0 auto;font:500 1.04rem/1.3 var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.ledger dd.hl{outline:2px solid var(--mark);outline-offset:3px;border-radius:999px;padding-inline:.5em;margin-right:4px}
+.ledger dd.big{font-size:1.25rem}
+.case h4{margin:26px 0 8px;font:500 .75rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.case ul{margin:0;padding-left:1.15em;display:grid;gap:5px;font-size:.95rem}
+.case li::marker{color:var(--accent)}
+.case figure{margin:0;align-self:start;position:sticky;top:84px;min-width:0}
+.shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;cursor:zoom-in}
+.shot img{width:100%;height:auto}
+.case figcaption{margin-top:10px;font:400 .76rem/1.5 var(--f-mono);color:var(--muted)}
+@media (max-width:900px){
+  .case{grid-template-columns:minmax(0,1fr)}
+  .case figure{position:static}
+}
+
+/* cara kerja */
+.how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+.funnel{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.funnel li{width:var(--w);padding:14px 16px;border-radius:6px;background:color-mix(in srgb,var(--accent) var(--o),var(--bg));color:var(--ink);min-width:0}
+.funnel li.last{color:var(--accent-ink)}
+.funnel b{display:block;font:800 1.05rem var(--f-display);font-stretch:112%;letter-spacing:-.01em}
+.funnel span{display:block;font-size:.86rem;opacity:.85;line-height:1.4}
+.funnel-note{margin-top:16px;font-size:.92rem;color:var(--muted);max-width:50ch}
+.svc{margin:0;padding:0;border-top:2px solid var(--ink)}
+.svc div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.svc dt{font:600 1rem var(--f-body)}
+.svc dd{margin:0;color:var(--muted);font-size:.93rem}
+@media (max-width:900px){.how{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.svc div{grid-template-columns:minmax(0,1fr);gap:2px}}
+.funnel-title,.svc-title{font:500 .75rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+
+/* brand */
+.brands{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:clamp(10px,1.6vw,22px);list-style:none;margin:0;padding:0}
+.brands li{aspect-ratio:1;border-radius:50%;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.brands img{width:100%;height:100%;object-fit:cover}
+.brand-note{margin-top:18px;color:var(--muted);font-size:.9rem}
+@media (max-width:760px){.brands{grid-template-columns:repeat(3,minmax(0,1fr));max-width:420px}}
+
+/* tentang */
+.about{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(28px,5vw,72px);align-items:start}
+.job{display:grid;grid-template-columns:130px minmax(0,1fr);gap:8px 20px;padding-block:22px;border-top:1px solid var(--line)}
+.job:first-child{border-top:2px solid var(--ink)}
+.job time{font:400 .8rem/1.6 var(--f-mono);color:var(--muted);padding-top:4px}
+.job h3{font-size:1.15rem;line-height:1.2;font-stretch:108%}
+.job .org{color:var(--accent);font-weight:600;font-size:.95rem;margin:2px 0 8px}
+.job ul{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.94rem;color:var(--muted)}
+.job li::marker{color:var(--accent)}
+@media (max-width:560px){.job{grid-template-columns:minmax(0,1fr)}}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.tools li{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 0 0;border-top:1px solid var(--line);font-size:.88rem;font-weight:500}
+.tools img{width:34px;height:34px;object-fit:contain}
+.tools-title{font:500 .75rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-bottom:12px;border-bottom:2px solid var(--ink)}
+@media (max-width:900px){.about{grid-template-columns:minmax(0,1fr)}}
+
+/* sertifikat */
+.certs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}
+.certs li{min-width:0}
+.certs .shot{border-radius:8px}
+.certs b{display:block;margin-top:10px;font:600 .92rem/1.35 var(--f-body)}
+.certs span{display:block;color:var(--muted);font:400 .76rem/1.5 var(--f-mono);margin-top:3px}
+@media (max-width:900px){.certs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* kontak */
+.cta{margin-top:clamp(60px,9vw,116px);background:var(--ink);color:var(--bg);border-radius:18px;padding:clamp(26px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,64px);align-items:end}
+.cta h2{font-size:clamp(2rem,4.6vw,3.6rem);line-height:1;margin:12px 0 16px}
+.cta .eyebrow{color:var(--mark)}
+.cta p{max-width:46ch;opacity:.82}
+.cta .btn{background:var(--bg);color:var(--ink);border-color:var(--bg);margin-top:26px}
+.cta .btn:focus-visible{outline-color:var(--mark)}
+.lines{margin:0;padding:0;list-style:none;display:grid;border-top:1px solid color-mix(in srgb,var(--bg) 30%,transparent)}
+.lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:14px 0;border-bottom:1px solid color-mix(in srgb,var(--bg) 30%,transparent)}
+.lines small{grid-column:1/-1;font:500 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.lines span.v{font:500 1.02rem var(--f-mono);overflow-wrap:anywhere;min-width:0}
+.copy{background:transparent;color:inherit;border:1px solid color-mix(in srgb,var(--bg) 55%,transparent);border-radius:6px;padding:.4rem .8rem;font:500 .8rem var(--f-mono);cursor:pointer}
+@media (max-width:860px){.cta{grid-template-columns:minmax(0,1fr)}}
+
+footer{padding-block:34px 44px;color:var(--muted);font:400 .78rem/1.6 var(--f-mono)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(5,8,6,.86);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));cursor:zoom-out}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:88vh;width:auto;height:auto;background:#fff;border-radius:8px}
+.lb-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;background:var(--surface);color:var(--ink);border:0;border-radius:8px;padding:.55rem .9rem;font:600 .85rem var(--f-body);cursor:pointer}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#atas">Adnan Ilham<small>ADS</small></a>
+    <nav aria-label="Navigasi">
+      <a href="#hasil">Hasil kerja</a>
+      <a href="#cara">Cara kerja</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#sertifikat">Sertifikat</a>
+    </nav>
+    <a class="btn primary small" href="https://wa.me/628975739002?text=Halo%20Adnan%2C%20saya%20ingin%20konsultasi%20soal%20iklan%20untuk%20bisnis%20saya." target="_blank" rel="noopener">Chat WhatsApp</a>
+  </div>
+</header>
+
+<main id="atas">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Spesialis iklan performa · Meta · Google · TikTok</p>
+          <h1>Budget iklan yang kembali sebagai <span class="ringed">omzet<svg viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M14 44 C 6 16, 66 4, 108 6 C 160 8, 197 22, 190 44 C 184 70, 122 77, 80 73 C 38 70, 4 62, 16 34"/></svg></span>.</h1>
+          <p class="lead">Saya <strong>Adnan Ilham</strong>, spesialis iklan dengan pengalaman <strong>4+ tahun</strong> di Meta Ads, Google Ads, dan TikTok Ads. Saya sudah mengelola iklan <strong>10+ brand</strong> dari berbagai industri, dengan budget Rp5 juta sampai Rp200 juta per bulan. Yang saya bangun adalah sistem yang terus menurunkan biaya dan menaikkan ROI.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://wa.me/628975739002?text=Halo%20Adnan%2C%20saya%20ingin%20konsultasi%20soal%20iklan%20untuk%20bisnis%20saya." target="_blank" rel="noopener">Konsultasi lewat WhatsApp</a>
+            <a class="btn" href="#hasil">Lihat hasil kerja</a>
+          </div>
+          <p class="contact-mini">WhatsApp +62 897 573 9002 · aipamungkas999@gmail.com</p>
+        </div>
+        <figure class="portrait" style="margin:0">
+          <img src="images/photo.jpg" alt="Foto Adnan Ilham Huda Pamungkas, tersenyum dengan tangan bersilang" width="900" height="1306">
+          <figcaption>Adnan Ilham Huda Pamungkas<b>Digital Marketing Specialist &amp; Supervisor, CV. Arli Kurnia Media, 2021 sampai sekarang</b></figcaption>
+        </figure>
+      </div>
+
+      <div class="figs" role="list">
+        <div class="fig" role="listitem"><b>Rp3,9 miliar+</b><span>total biaya iklan pada empat studi kasus di bawah</span></div>
+        <div class="fig" role="listitem"><b>Rp7,1 miliar+</b><span>nilai konversi dan penjualan yang tercatat di platform</span></div>
+        <div class="fig" role="listitem"><b>90.000+</b><span>konversi dan pembelian dari Google, Meta, dan TikTok</span></div>
+        <div class="fig" role="listitem"><b>10+ brand</b><span>dikelola dari berbagai industri, tim iklan dan CS 10 sampai 15 orang</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="hasil">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Hasil kerja</p>
+        <h2>Angka dari dashboard iklan yang sebenarnya</h2>
+        <p>Setiap angka di bawah dicatat dari tangkapan layar Meta Ads Manager, Google Ads, dan TikTok Seller Center, lengkap dengan periodenya. Klik gambar untuk memperbesar.</p>
+      </div>
+
+      <article class="case">
+        <div>
+          <div class="case-meta"><img src="images/tool_meta.png" alt=""><b>Meta Ads (Facebook &amp; Instagram)</b><time>4 Mar 2024 – 31 Mar 2026</time></div>
+          <h3>Multi brand di 6 akun iklan: Profit Maker, Cleanoz, Business Coaching, Astoria, Mormor, Gladio, dan lainnya</h3>
+          <p class="goal">Menaikkan penjualan dengan CPA dan ROAS yang tetap efisien, dari awareness, konversi, sampai retargeting.</p>
+          <dl class="ledger">
+            <div><dt>Biaya iklan</dt><dd class="hl">Rp2,21 miliar</dd></div>
+            <div><dt>Nilai konversi pembelian</dt><dd class="hl">Rp4,72 miliar</dd></div>
+            <div><dt>Pembelian</dt><dd>38.479</dd></div>
+            <div><dt>Biaya per pembelian</dt><dd>Rp57.507</dd></div>
+            <div><dt>ROAS (dihitung)</dt><dd>2,13x</dd></div>
+          </dl>
+          <h4>Strategi</h4>
+          <ul>
+            <li>Segmentasi kampanye per brand dan tahap funnel</li>
+            <li>Uji kreatif: copy, visual, dan angle</li>
+            <li>Scaling iklan dan audiens yang menang</li>
+            <li>Retargeting audiens hangat dan niat tinggi</li>
+            <li>Optimasi CPA, CTR, CPM, dan ROAS</li>
+          </ul>
+        </div>
+        <figure>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar tangkapan layar Meta Ads"><img src="images/shot_meta.webp" alt="Tabel Meta Ads Manager: total belanja Rp2.212.795.032, 38.479 pembelian, nilai konversi pembelian Rp4.717.681.533" width="1721" height="517"></button>
+          <figcaption>Sumber: Meta Ads Manager, 6 akun iklan, 4 Mar 2024 – 31 Mar 2026</figcaption>
+        </figure>
+      </article>
+
+      <article class="case">
+        <div>
+          <div class="case-meta"><img src="images/tool_googleads.png" alt=""><b>Google Ads</b><time>1 Mar 2022 – 1 Agu 2024</time></div>
+          <h3>Multi brand: Profit Maker, Cleanoz, Business Coaching</h3>
+          <p class="goal">Mendorong penjualan dan konversi di beberapa lini bisnis lewat Search, Display, Discovery, dan YouTube Ads.</p>
+          <dl class="ledger">
+            <div><dt>Biaya iklan</dt><dd class="hl">Rp1,66 miliar</dd></div>
+            <div><dt>Nilai konversi</dt><dd class="hl">Rp2,31 miliar</dd></div>
+            <div><dt>Konversi</dt><dd>50.880</dd></div>
+            <div><dt>Biaya per konversi (dihitung)</dt><dd>±Rp32.700</dd></div>
+            <div><dt>ROAS (dihitung)</dt><dd>1,39x</dd></div>
+          </dl>
+          <h4>Strategi</h4>
+          <ul>
+            <li>Funnel penuh dari awareness sampai konversi</li>
+            <li>Fokus pada kata kunci niat tinggi di Search Ads</li>
+            <li>Retargeting lewat Display dan Discovery</li>
+            <li>Uji kreatif dan copy yang berkelanjutan</li>
+            <li>Optimasi berbasis CPA, ROAS, dan CVR</li>
+          </ul>
+        </div>
+        <figure>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar tangkapan layar Google Ads"><img src="images/shot_google.webp" alt="Dashboard Google Ads: biaya Rp1.663.899.490, 278.797.079 tayangan, 50.880,65 konversi, nilai konversi Rp2.307.961.556" width="1461" height="586"></button>
+          <figcaption>Sumber: Google Ads, semua kampanye, 1 Mar 2022 – 1 Agu 2024</figcaption>
+        </figure>
+      </article>
+
+      <article class="case">
+        <div>
+          <div class="case-meta"><img src="images/tool_tiktok.png" alt=""><b>TikTok Ads (GMV Max)</b><time>3 Apr – 31 Mei 2025</time></div>
+          <h3>Profit Maker</h3>
+          <p class="goal">Memaksimalkan omzet dari penjualan produk fisik dengan GMV Max, fokus pada respons langsung.</p>
+          <dl class="ledger">
+            <div><dt>Biaya iklan</dt><dd class="hl">Rp24,1 juta</dd></div>
+            <div><dt>Pendapatan kotor</dt><dd class="hl">Rp103,2 juta</dd></div>
+            <div><dt>Order</dt><dd>1.137</dd></div>
+            <div><dt>Biaya per order</dt><dd>Rp21.200</dd></div>
+            <div><dt>ROI</dt><dd class="big">4,28</dd></div>
+          </dl>
+          <h4>Strategi</h4>
+          <ul>
+            <li>GMV Max untuk optimasi omzet otomatis</li>
+            <li>Fokus pada produk berpermintaan tinggi</li>
+            <li>Uji kreatif: hook, angle, dan storytelling</li>
+            <li>Scaling iklan berkinerja tinggi</li>
+            <li>Menekan biaya per order</li>
+          </ul>
+        </div>
+        <figure>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar tangkapan layar TikTok GMV Max Profit Maker"><img src="images/shot_tiktok_pm.webp" alt="Dashboard TikTok GMV Max: biaya 24.104.789 IDR, 1.137 order, pendapatan kotor 103.197.598 IDR, ROI 4,28" width="1356" height="836"></button>
+          <figcaption>Sumber: TikTok GMV Max, 3 Apr – 31 Mei 2025</figcaption>
+        </figure>
+      </article>
+
+      <article class="case">
+        <div>
+          <div class="case-meta"><img src="images/tool_tiktok.png" alt=""><b>TikTok Ads (GMV Max)</b><time>3 Apr 2025 – 3 Apr 2026</time></div>
+          <h3>Cleanoz</h3>
+          <p class="goal">Menaikkan penjualan produk otomotif dengan ROI dan biaya per order yang efisien.</p>
+          <dl class="ledger">
+            <div><dt>Biaya iklan</dt><dd class="hl">Rp9,2 juta</dd></div>
+            <div><dt>Pendapatan kotor</dt><dd class="hl">Rp41,9 juta</dd></div>
+            <div><dt>Order</dt><dd>425</dd></div>
+            <div><dt>Biaya per order</dt><dd>Rp21.679</dd></div>
+            <div><dt>ROI</dt><dd class="big">4,55</dd></div>
+          </dl>
+          <h4>Strategi</h4>
+          <ul>
+            <li>GMV Max dengan optimasi berbasis omzet</li>
+            <li>Kreatif problem-solution dari keluhan umum pemilik kendaraan</li>
+            <li>Uji hook: before-after, demo, dan konten edukasi</li>
+            <li>Scaling iklan dengan ROI tinggi</li>
+            <li>Mengontrol efisiensi biaya per order</li>
+          </ul>
+        </div>
+        <figure>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar tangkapan layar TikTok GMV Max Cleanoz"><img src="images/shot_tiktok_cleanoz.webp" alt="Dashboard TikTok GMV Max Cleanoz: biaya 9.213.631 IDR, 425 order, pendapatan kotor 41.880.657 IDR, ROI 4,55" width="1337" height="964"></button>
+          <figcaption>Sumber: TikTok GMV Max, 3 Apr 2025 – 3 Apr 2026</figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="cara">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Cara kerja</p>
+        <h2>Satu sistem dari iklan pertama sampai laporan</h2>
+        <p>Iklan tidak berhenti di satu kampanye. Setiap tahap funnel punya tujuan sendiri, dan semuanya dipantau dari angka yang sama: CPA, CTR, CPM, ROAS, dan CVR.</p>
+      </div>
+      <div class="how">
+        <div>
+          <p class="funnel-title">Funnel yang saya bangun</p>
+          <ol class="funnel">
+            <li style="--w:100%;--o:20%"><b>Awareness</b><span>Menjangkau calon pembeli baru</span></li>
+            <li style="--w:84%;--o:38%"><b>Consideration</b><span>Membangun minat dan kepercayaan</span></li>
+            <li style="--w:68%;--o:62%"><b>Conversion</b><span>Mendorong pembelian</span></li>
+            <li class="last" style="--w:52%;--o:100%"><b>Retargeting</b><span>Mengajak kembali audiens hangat</span></li>
+          </ol>
+          <p class="funnel-note">Di atas funnel itu berjalan siklus yang sama di semua platform: uji kreatif, scale iklan yang menang, hentikan yang boros, lalu laporkan hasilnya.</p>
+        </div>
+        <div>
+          <p class="svc-title">Yang saya kerjakan</p>
+          <dl class="svc">
+            <div><dt>Meta Ads</dt><dd>Facebook dan Instagram Ads</dd></div>
+            <div><dt>Google Ads</dt><dd>Search, Display, dan YouTube</dd></div>
+            <div><dt>TikTok Ads</dt><dd>GMV Max untuk penjualan produk fisik</dd></div>
+            <div><dt>Strategi funnel</dt><dd>Dari awareness sampai retargeting</dd></div>
+            <div><dt>Conversion Rate Optimization</dt><dd>Menaikkan persentase pengunjung yang membeli</dd></div>
+            <div><dt>Analisis data dan laporan</dt><dd>Laporan performa dan insight untuk keputusan</dd></div>
+            <div><dt>Uji kreatif dan scaling</dt><dd>Hook, angle, copy, dan visual yang diuji berulang</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="brand">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Brand</p>
+        <h2>Brand yang pernah saya tangani</h2>
+      </div>
+      <ul class="brands">
+        <li><img src="images/brand_gladioskin.png" alt="Logo Gladioskin" loading="lazy"></li>
+        <li><img src="images/brand_ak.png" alt="Logo AK" loading="lazy"></li>
+        <li><img src="images/brand_cleanoz.png" alt="Logo Cleanoz" loading="lazy"></li>
+        <li><img src="images/brand_businesscoaching.png" alt="Logo Online Business Coaching" loading="lazy"></li>
+        <li><img src="images/brand_dots.png" alt="Logo lingkaran titik hijau" loading="lazy"></li>
+        <li><img src="images/brand_sare.png" alt="Logo Sare Pillow Spray" loading="lazy"></li>
+        <li><img src="images/brand_profitmaker.png" alt="Logo Profit Maker" loading="lazy"></li>
+        <li><img src="images/brand_moyu.png" alt="Logo moyu" loading="lazy"></li>
+        <li><img src="images/brand_astoria.png" alt="Logo Astoria" loading="lazy"></li>
+      </ul>
+      <p class="brand-note">Sebagian dari 10+ brand yang iklannya saya kelola.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="tentang">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Tentang</p>
+        <h2>Pengalaman mengelola iklan dan memimpin tim</h2>
+      </div>
+      <div class="about">
+        <div>
+          <article class="job">
+            <time>2021 – sekarang</time>
+            <div>
+              <h3>Digital Marketing Specialist &amp; Supervisor</h3>
+              <p class="org">CV. Arli Kurnia Media</p>
+              <ul>
+                <li>Mengelola dan mengoptimasi kampanye Meta Ads, Google Ads, dan TikTok Ads</li>
+                <li>Menaikkan sales 200–300% lewat scaling dan optimasi funnel</li>
+                <li>Menangani 10+ brand dengan budget iklan Rp5 juta sampai Rp200 juta per bulan</li>
+                <li>Menyusun strategi full-funnel: awareness, consideration, conversion, retargeting</li>
+                <li>Memimpin dan mengoordinasi tim Advertising dan Customer Service 10 sampai 15 orang</li>
+                <li>Menyajikan laporan performa dan insight untuk pengambilan keputusan</li>
+              </ul>
+            </div>
+          </article>
+          <article class="job">
+            <time>2023 – 2024</time>
+            <div>
+              <h3>Assistant Mentor</h3>
+              <p class="org">Skill Academy by Ruangguru</p>
+              <ul>
+                <li>Membantu mengajar digital marketing dengan fokus performance marketing</li>
+                <li>Membantu peserta memahami strategi dan eksekusi iklan</li>
+                <li>Mendukung sesi belajar yang interaktif dan praktis</li>
+              </ul>
+            </div>
+          </article>
+          <article class="job">
+            <time>2019</time>
+            <div>
+              <h3>Surveyor</h3>
+              <p class="org">Kompas TV</p>
+              <ul>
+                <li>Riset lapangan dan wawancara dengan berbagai narasumber</li>
+                <li>Mengumpulkan dan menganalisis data secara akurat untuk kebutuhan produksi</li>
+                <li>Bekerja dengan tenggat ketat dan perhatian pada detail</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+        <div>
+          <p class="tools-title">Alat kerja</p>
+          <ul class="tools" style="margin-top:14px">
+            <li><img src="images/tool_googleads.png" alt="" loading="lazy">Google Ads</li>
+            <li><img src="images/tool_meta.png" alt="" loading="lazy">Meta Ads</li>
+            <li><img src="images/tool_tiktok.png" alt="" loading="lazy">TikTok Ads</li>
+            <li><img src="images/tool_analytics.png" alt="" loading="lazy">Google Analytics</li>
+            <li><img src="images/tool_gtm.png" alt="" loading="lazy">Tag Manager</li>
+            <li><img src="images/tool_sheets.png" alt="" loading="lazy">Google Sheets</li>
+            <li><img src="images/tool_clickup.png" alt="" loading="lazy">ClickUp</li>
+            <li><img src="images/tool_trello.png" alt="" loading="lazy">Trello</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="sertifikat">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Sertifikat</p>
+        <h2>Pelatihan dan sertifikasi iklan</h2>
+        <p>Klik sertifikat untuk memperbesar. Tanggal yang tertera adalah tanggal terbit.</p>
+      </div>
+      <ul class="certs">
+        <li>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar sertifikat Google Digital Garage"><img src="images/cert_digitalgarage.webp" alt="Sertifikat Google Digital Garage, The Fundamentals of Digital Marketing, atas nama Adnan Ilham" loading="lazy"></button>
+          <b>The Fundamentals of Digital Marketing</b><span>Google Digital Garage · 2023</span>
+        </li>
+        <li>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar sertifikat Google Ads Search"><img src="images/cert_ads_search.webp" alt="Sertifikat Google Ads Search atas nama Adnan Ilham" loading="lazy"></button>
+          <b>Google Ads Search Certification</b><span>Terbit 3 Feb 2023</span>
+        </li>
+        <li>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar sertifikat Google Ads Display"><img src="images/cert_ads_display.webp" alt="Sertifikat Google Ads Display atas nama Adnan Ilham" loading="lazy"></button>
+          <b>Google Ads Display Certification</b><span>Terbit 9 Mar 2023</span>
+        </li>
+        <li>
+          <button class="shot" type="button" data-zoom aria-label="Perbesar sertifikat Skill Academy"><img src="images/cert_skillacademy.webp" alt="Sertifikat partisipasi Skill Academy by Ruangguru, kelas Digital Marketing: Membuat Kampanye Iklan Potensial" loading="lazy"></button>
+          <b>Asisten instruktur, Digital Marketing: Membuat Kampanye Iklan Potensial</b><span>Skill Academy · 16 Jan 2024</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="cta" id="kontak">
+      <div>
+        <p class="eyebrow">Mulai kerja sama</p>
+        <h2>Ceritakan target penjualan Anda.</h2>
+        <p>Kirim nama brand, produk, dan budget iklan per bulan lewat WhatsApp. Setelah itu kita bahas langkah berikutnya.</p>
+        <a class="btn" href="https://wa.me/628975739002?text=Halo%20Adnan%2C%20saya%20ingin%20konsultasi%20soal%20iklan%20untuk%20bisnis%20saya." target="_blank" rel="noopener">Buka WhatsApp</a>
+      </div>
+      <ul class="lines">
+        <li><small>WhatsApp</small><span class="v" id="v-wa">+62 897 573 9002</span><button class="copy" type="button" data-copy="v-wa">Salin</button></li>
+        <li><small>Email</small><span class="v" id="v-mail">aipamungkas999@gmail.com</span><button class="copy" type="button" data-copy="v-mail">Salin</button></li>
+        <li><small>LinkedIn</small><span class="v">Adnan Ilham</span></li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Adnan Ilham Huda Pamungkas. Angka berasal dari dashboard iklan pada periode yang tertera; ROAS dan biaya per konversi yang bertanda "dihitung" adalah hasil bagi dari angka tersebut.</div>
+</footer>
+
+<div class="lightbox" id="lb" hidden role="dialog" aria-label="Gambar diperbesar">
+  <button class="lb-close" type="button">Tutup</button>
+  <img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'), lbi=lb.querySelector('img');
+  function closeLb(){lb.hidden=true;lbi.removeAttribute('src');}
+  document.querySelectorAll('[data-zoom]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var im=b.querySelector('img');
+      lbi.src=im.src; lbi.alt=im.alt; lb.hidden=false;
+      lb.querySelector('.lb-close').focus();
+    });
+  });
+  lb.addEventListener('click',closeLb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)closeLb();});
+
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.getAttribute('data-copy'));
+      var txt=el.textContent.trim();
+      function done(){var old=btn.textContent;btn.textContent='Tersalin';setTimeout(function(){btn.textContent=old;},1600);}
+      function fallback(){
+        try{var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}
+        btn.textContent='Teks terpilih';setTimeout(function(){btn.textContent='Salin';},1600);
+      }
+      try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback);}
+        else{fallback();}
+      }catch(e){fallback();}
+    });
+  });
+})();
+</script>
+</body>
+</html>
